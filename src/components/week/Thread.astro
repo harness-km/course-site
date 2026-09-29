@@ -1,0 +1,34 @@
+---
+// A coloured callout for the recurring weekly threads.
+// Usable in MDX too: <Thread kind="security">…</Thread>
+interface Props {
+  kind: 'security' | 'adr' | 'break-it' | 'n8n' | 'checkpoint' | 'gate' | 'mvw';
+  label?: string;
+}
+const { kind, label } = Astro.props;
+const LABELS = {
+  security: 'Security lens',
+  adr: "Architect's corner",
+  'break-it': 'Break it',
+  n8n: 'n8n bridge',
+  checkpoint: 'Checkpoint',
+  gate: 'Act gate',
+  mvw: 'Minimum viable week',
+};
+const ICONS = {
+  security: '<path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3z"/>',
+  adr: '<path d="M4 20h16M6 20V9l6-5 6 5v11M10 20v-6h4v6"/>',
+  'break-it': '<path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/>',
+  n8n: '<path d="M4 12h5m6 0h5M9 12a3 3 0 106 0 3 3 0 00-6 0z"/>',
+  checkpoint: '<path d="M5 12l4 4 10-10"/>',
+  gate: '<path d="M5 21V4m0 0h11l-2 4 2 4H5"/>',
+  mvw: '<path d="M12 6v6l4 2M12 21a9 9 0 100-18 9 9 0 000 18z"/>',
+};
+---
+<aside class="km-thread not-content" data-kind={kind}>
+  <p class="km-thread-label">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONS[kind]} />
+    {label ?? LABELS[kind]}
+  </p>
+  <div class="km-thread-body"><slot /></div>
+</aside>

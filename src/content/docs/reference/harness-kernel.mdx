@@ -1,0 +1,66 @@
+---
+title: The Harness Kernel v1
+description: The reusable core — ports and adapters, repository layout, and domain packs.
+sidebar:
+  order: 2
+---
+
+The kernel is built once and reused for every domain; each use case is a domain pack of configuration and small domain-specific files, and all infrastructure sits behind swappable adapters. This "ports and adapters" layout is what learners take back to their own work, and in Week 10 they prove it by adding a domain pack of their own without changing the kernel.
+
+<div class="km-arch not-content" role="img" aria-label="Harness Kernel architecture: ways in feed the kernel; domain packs plug in as configuration; adapters provide infrastructure">
+  <div class="km-arch-layer">
+    <p class="km-arch-label">Ways in</p>
+    <div class="km-arch-row"><span>Gradio UI</span><span>API (your n8n workflow calls it)</span><span>Tests and evaluations</span></div>
+  </div>
+  <div class="km-arch-arrow" aria-hidden="true">↓</div>
+  <div class="km-arch-layer km-arch-core">
+    <p class="km-arch-label">Harness Kernel: built once</p>
+    <div class="km-arch-row km-arch-wide"><span>Runtime: builds a LangGraph from the domain pack and checkpoints its state</span></div>
+    <div class="km-arch-row"><span>Model router + cost meter</span><span>Tools + policy check</span><span>Hooks: guards, masking, audit</span></div>
+    <div class="km-arch-row"><span>Audit log</span><span>Human approval</span><span>Evaluation runner</span></div>
+  </div>
+  <div class="km-arch-arrow" aria-hidden="true">↑ plugs in as configuration</div>
+  <div class="km-arch-layer">
+    <p class="km-arch-label">Domain packs: one per use case</p>
+    <div class="km-arch-row"><span><b>Supplier invoices</b><small>Harness 1 · Weeks 1–6</small></span><span><b>Expense claims</b><small>Worked example · Week 7b</small></span><span><b>Your domain</b><small>Capstone · Weeks 10–10b</small></span></div>
+    <p class="km-arch-note">Each pack holds schemas, tools, policy.yaml, workflow.yaml, prompts and evals</p>
+  </div>
+  <div class="km-arch-layer">
+    <p class="km-arch-label">Adapters: swappable infrastructure</p>
+    <div class="km-arch-row"><span><b>Storage</b><small>SQLite → Postgres</small></span><span><b>Notifier</b><small>outbox → SMTP, Slack</small></span><span><b>Models</b><small>Anthropic, or fake</small></span></div>
+  </div>
+</div>
+
+Requests arrive through the interfaces, the kernel runs the domain pack's workflow, and every call to storage, email or a model goes through an adapter.
+
+## Repository layout
+
+```text
+harness/
+├── kernel/        # runtime, models (router + cost meter), tools, policy, hooks,
+│                  # guards, audit, telemetry, approval, evals
+├── adapters/      # storage_sqlite, notifier_outbox, llm_anthropic, llm_fake
+├── interfaces/    # gradio_app, api (for n8n to call)
+└── domains/
+    ├── invoices/
+    ├── expenses/   # the Week 7b worked example
+    └── _template/  # schemas.py, tools.py, policy.yaml, workflow.yaml, prompts/, evals/cases.yaml
+```
+
+## A domain pack in practice
+
+Applying the kernel to a new domain means copying `_template`, filling in its six parts and running the evaluation suite. Example `policy.yaml` for the invoice harness (teaching limits):
+
+```yaml
+roles:
+  ap_clerk:           { can: [submit_invoice, view_queue] }
+  ap_manager:         { can: [resolve_exception], approve_up_to: 500000 }   # INR
+  finance_controller: { can: [resolve_exception, edit_bank_details],
+                        requires_second_approver: [edit_bank_details] }
+  auditor:            { can: [read_audit_log] }
+limits:
+  price_tolerance_pct: 2
+  duplicate_window_days: 7
+```
+
+In Course 1, "reuse" means exactly this: a new domain is added through configuration, prompts, schemas and tools, and the kernel is not edited. `kernel/runtime.py` is provided in Week 7: you read it, trace how it turns YAML into a graph, and extend it.

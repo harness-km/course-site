@@ -1,0 +1,49 @@
+---
+title: Agent Harness Engineering
+description: Course 1 — build an AI agent harness and a reusable kernel, then apply it to your own work. No hype, just what works.
+template: splash
+hero:
+  tagline: Build a production-shaped AI agent harness, extract a reusable kernel from it, and apply that kernel to a process from your own work. Twelve live sessions. No hype, just what works.
+  actions:
+    - text: Read the syllabus
+      link: /syllabus/
+      icon: right-arrow
+    - text: Start with Week 0
+      link: /weeks/week-00/
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Who it is for
+
+Learners who already understand how to build AI agentic workflows and want to develop the mindset of an AI Solutions Architect and Developer. The course uses n8n as its reference workflow tool; if you come from Make, Zapier, Copilot Studio or similar tools, the same concepts apply.
+
+## Why harness design matters
+
+On the same coding tasks, changing only the harness moved benchmark scores by 27.4 points, against 29.4 points for changing the model (Claw-SWE-Bench, June 2026, as reported in Vizuara's Harness Engineering book). The scaffolding around the model is an engineering decision, and this course teaches it.
+
+## What you build
+
+<CardGrid>
+  <Card title="Harness 1 · Supplier invoices" icon="document">
+    Weeks 1–6. Invoice PDF → structured invoice → extraction audit → three-way match with
+    purchase order and goods receipt → payment decision.
+  </Card>
+  <Card title="Harness Kernel v1" icon="puzzle">
+    Weeks 7–9. The reusable core, with each domain plugged in as configuration. Build once, use
+    many times.
+  </Card>
+  <Card title="Capstone · Your own domain" icon="star">
+    Weeks 10–11. The kernel applied, through configuration only, to a small process from your own
+    work, and a closing conversation about how you built it.
+  </Card>
+  <Card title="Course 2 · Later" icon="rocket">
+    A harder second harness, multi-agent coordination and production deployment, designed from
+    what the founding cohort learns. [See the draft](/course-2/).
+  </Card>
+</CardGrid>
+
+## How each week runs
+
+The reading is posted here three days before each 2-hour live session. The session discusses the ideas; the assignment (core steps for everyone, stretch steps if you have time) is done at your own pace, and a self-check tells you it works. Nothing is submitted and nothing is graded: you leave with a portfolio you built and can explain. Every week carries four threads: a **security lens**, an **architect's corner** with a short ADR, a **break it** challenge and an **n8n bridge**.

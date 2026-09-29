@@ -1,0 +1,16 @@
+---
+import { labUrl, repoFileUrl, solutionUrl } from '../../data/course.mjs';
+interface Props { lab: { path: string; env: 'colab' | 'codespaces' }; solution?: boolean }
+const { lab, solution = false } = Astro.props;
+const sol = solution ? solutionUrl(lab) : null;
+const isColab = lab.env === 'colab';
+---
+<div class="km-lab not-content">
+  <a class="km-btn" href={labUrl(lab)} target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 5l11 7-11 7V5z"/></svg>
+    {isColab ? 'Open lab in Colab' : 'Open in Codespaces'}
+  </a>
+  {sol && <a class="km-btn km-btn-ghost" href={sol} target="_blank" rel="noopener">Open solution in Colab</a>}
+  <a class="km-btn km-btn-ghost" href={repoFileUrl(lab.path)} target="_blank" rel="noopener">View on GitHub</a>
+  <span class="km-lab-path"><code>{lab.path}</code></span>
+</div>

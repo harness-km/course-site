@@ -1,0 +1,108 @@
+---
+// Wraps every page's Markdown. Week pages get the standard week template around
+// their body; all other pages render unchanged.
+import Default from '@astrojs/starlight/components/MarkdownContent.astro';
+import Thread from '../week/Thread.astro';
+import LabButtons from '../week/LabButtons.astro';
+import Checklist from '../week/Checklist.astro';
+import Slides from '../week/Slides.astro';
+import { inline } from '../week/inline.mjs';
+import { actForWeek, isGateWeek, weekLabel } from '../../data/course.mjs';
+
+const d = Astro.locals.starlightRoute.entry.data;
+const isWeek = typeof d.week === 'number';
+const live = d.status === 'live';
+const act = isWeek ? actForWeek(d.week) : undefined;
+const label = isWeek ? (d.weekLabel ?? weekLabel(d.week)) : '';
+---
+{!isWeek ? (
+  <Default><slot /></Default>
+) : (
+  <Default>
+    <p class="km-week-meta not-content">
+      <span>Week {label}</span><span class="km-sep" aria-hidden="true">·</span><span class="km-act">{act?.label}</span>
+    </p>
+    {d.summary && <p class="km-summary" set:html={inline(d.summary)} />}
+
+    {live && d.lab && <LabButtons lab={d.lab} solution={d.solution} />}
+
+    {d.slides.length > 0 && (
+      <>
+        <h2 id="slides">Slides</h2>
+        <Slides slides={d.slides} />
+      </>
+    )}
+
+    {d.outcomes.length > 0 && (
+      <>
+        <h2 id="outcomes">Outcomes</h2>
+        <ul>{d.outcomes.map((o) => <li set:html={inline(o)} />)}</ul>
+      </>
+    )}
+
+    {!live ? (
+      <div class="km-outline-notice not-content">
+        <strong>Outline only.</strong> The reading and the assignment for this week are posted three days
+        before its live session.
+      </div>
+    ) : (
+      <>
+        {d.n8nBridge && (
+          <Thread kind="n8n"><p set:html={inline(d.n8nBridge)} /></Thread>
+        )}
+
+        <slot />
+
+        {d.selfCheck && (
+          <Thread kind="checkpoint" label="Self-check"><p set:html={inline(d.selfCheck)} /></Thread>
+        )}
+        {d.mvw && (
+          <Thread kind="mvw"><p set:html={inline(d.mvw)} /></Thread>
+        )}
+
+        {(d.security || d.adr || d.breakIt || d.resource || d.deeper.length > 0) && <h2 id="threads">This week's threads</h2>}
+        {d.security && (
+          <Thread kind="security">
+            <p set:html={inline(d.security.text)} />
+            {d.security.category && <p class="km-thread-meta">Threat category: {d.security.category}</p>}
+          </Thread>
+        )}
+        {d.adr && (
+          <Thread kind="adr" label={`Architect's corner · ADR ${d.adr.number}`}>
+            <p><strong set:html={inline(d.adr.title)} /></p>
+            {d.adr.detail && <p class="km-thread-meta" set:html={inline(d.adr.detail)} />}
+            <p class="km-thread-meta">Use the <a href="/reference/a-c-templates/">half-page ADR template</a>.</p>
+          </Thread>
+        )}
+        {d.breakIt && (
+          <Thread kind="break-it"><p set:html={inline(d.breakIt)} /></Thread>
+        )}
+        {d.deeper.length > 0 && (
+          <>
+            <h3 id="going-deeper">Going deeper</h3>
+            {d.deeper.length === 1 ? <p set:html={inline(d.deeper[0])} /> : <ul>{d.deeper.map((x) => <li set:html={inline(x)} />)}</ul>}
+            <p class="km-thread-meta">Some ideas here are adapted from the Odysseus harness tutorials and Vizuara's Harness Engineering book. See <a href="/reference/k-credits/">Credits</a>.</p>
+          </>
+        )}
+        {d.resource && (
+          <>
+            <h3 id="resource-meter">Resource meter</h3>
+            <p><strong>Measure:</strong> <span set:html={inline(d.resource.measure)} /><br />
+            <strong>Optimise:</strong> <span set:html={inline(d.resource.optimise)} /></p>
+          </>
+        )}
+
+        {d.portfolio.length > 0 && (
+          <>
+            <h2 id="portfolio">Keep for your portfolio</h2>
+            <Checklist week={label} items={d.portfolio} />
+          </>
+        )}
+
+        {isGateWeek(d.week) && (
+          <Thread kind="gate" label={`${act?.label} · gate`}><p>{act?.gate}</p></Thread>
+        )}
+      </>
+    )}
+  </Default>
+)}

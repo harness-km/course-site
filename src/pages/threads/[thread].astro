@@ -1,0 +1,55 @@
+---
+// Auto-built indexes that gather one weekly thread across all live week pages.
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { getCollection } from 'astro:content';
+import { inline } from '../../components/week/inline.mjs';
+import { weekLabel } from '../../data/course.mjs';
+
+const THREADS = {
+  security: { title: 'Security lens, all weeks', lead: 'Every week’s threat, in the order it is introduced. Log each one in your threat model.' },
+  adr: { title: 'ADRs, all weeks', lead: 'One architecture decision per week. Use the ADR template in Reference.' },
+  'break-it': { title: 'Break it, all weeks', lead: 'The planted failure or attack for each week.' },
+  'n8n-bridge': { title: 'n8n bridge, all weeks', lead: 'What each week replaces in n8n, and what is gained and lost.' },
+} as const;
+
+export function getStaticPaths() {
+  return ['security', 'adr', 'break-it', 'n8n-bridge'].map((thread) => ({ params: { thread } }));
+}
+
+const thread = Astro.params.thread as keyof typeof THREADS;
+const meta = THREADS[thread];
+const weeks = (await getCollection('docs'))
+  .filter((e) => typeof e.data.week === 'number')
+  .sort((a, b) => a.data.week! - b.data.week!);
+const live = weeks.filter((e) => e.data.status === 'live');
+const pending = weeks.filter((e) => e.data.status !== 'live').map((e) => e.data.weekLabel ?? weekLabel(e.data.week));
+
+const rows = live
+  .map((e) => {
+    const d = e.data;
+    const cell =
+      thread === 'security' ? d.security && { text: d.security.text, extra: d.security.category } :
+      thread === 'adr' ? d.adr && { text: `**ADR ${d.adr.number}: ${d.adr.title}**`, extra: d.adr.detail } :
+      thread === 'break-it' ? d.breakIt && { text: d.breakIt } :
+      d.n8nBridge && { text: d.n8nBridge };
+    return cell ? { week: d.weekLabel ?? weekLabel(d.week), href: `/${e.id}/`, ...cell } : null;
+  })
+  .filter(Boolean) as { week: string; href: string; text: string; extra?: string }[];
+---
+<StarlightPage frontmatter={{ title: meta.title, description: meta.lead, tableOfContents: false }}>
+  <p>{meta.lead}</p>
+  {rows.length === 0 ? <p>Nothing here yet. Entries appear as each week goes live.</p> : (
+    <table>
+      <thead><tr><th>Week</th><th>{meta.title.split(',')[0]}</th></tr></thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr>
+            <td class="km-index-week"><a href={r.href}>Week {r.week}</a></td>
+            <td><span set:html={inline(r.text)} />{r.extra && <><br /><small set:html={inline(r.extra)} /></>}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )}
+  {pending.length > 0 && <p><small>Weeks {pending.join(', ')} appear here once their full pages go live.</small></p>}
+</StarlightPage>

@@ -1,0 +1,13 @@
+---
+const { siteTitleHref } = Astro.locals.starlightRoute;
+---
+<a href={siteTitleHref} class="km-wordmark">
+  <span class="km-wm-name">Agent Harness Engineering</span>
+  <span class="km-wm-tag">by Krishna Mohan</span>
+</a>
+<style>
+  .km-wordmark { display: flex; flex-direction: column; justify-content: center; text-decoration: none; min-width: 0; line-height: 1.1; }
+  .km-wm-name { font-family: var(--km-font-display); font-weight: 600; font-size: 1.35rem; color: var(--sl-color-white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .km-wm-tag { font-size: 10px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: var(--sl-color-text-accent); }
+  @media (max-width: 30rem) { .km-wm-name { font-size: 1.1rem; } }
+</style>
