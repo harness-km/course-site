@@ -35,7 +35,9 @@ Everything runs on one synthetic dataset for a fictional fast-moving consumer go
 6. Record design decisions as ADRs (architecture decision records) and threats in a threat model.
 7. Reuse one kernel for a new domain by writing configuration, not new kernel code.
 
-## Course 1 and Course 2 This is the first of two courses. Course 2 (Harness 2 for distribution, multi-agent coordination, MCP, and deployment to Azure) will be designed from what we learn running Course 1. See [Course 2 (coming later)](/course-2/).
+## Course 1 and Course 2
+
+This is the first of two courses. Course 2 (Harness 2 for distribution, multi-agent coordination, MCP, and deployment to Azure) will be designed from what we learn running Course 1. See [Course 2 (coming later)](/course-2/).
 
 ## The course map
 

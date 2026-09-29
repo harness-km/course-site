@@ -166,3 +166,17 @@ body { font-optical-sizing: auto; }
 .km-slide-preview { margin-top: .75rem; border: 1px solid var(--sl-color-gray-5); border-radius: .5rem; }
 .km-slide-preview summary { cursor: pointer; padding: .6rem .9rem; font-size: var(--sl-text-sm); color: var(--sl-color-text-accent); }
 .km-slide-preview iframe { display: block; width: 100%; aspect-ratio: 16 / 10; border: 0; border-top: 1px solid var(--sl-color-gray-5); background: #fff; }
+
+/* Left sidebar: a little wider and tighter, so week titles stay on one line. */
+:root { --sl-sidebar-width: 22rem; }
+.sidebar-content .large { font-size: var(--sl-text-base); font-weight: 650; letter-spacing: -0.01em; }
+.sidebar-content a { font-size: var(--sl-text-sm); }
+.sidebar-content .sl-badge { font-family: var(--sl-font); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.02em; line-height: 1.35; padding: 0 0.3rem; margin-inline-start: 0.25rem; }
+.sidebar-content ul ul a { padding-inline-end: 0.25rem; }
+
+/* Right sidebar ("On this page"): readable size, with bullets and hanging indents. */
+starlight-toc nav h2 { font-size: var(--sl-text-base); }
+starlight-toc a { display: flex; gap: 0.5rem; font-size: var(--sl-text-sm); line-height: 1.45; padding-block: 0.2rem; }
+starlight-toc a::before { content: '•'; flex-shrink: 0; color: var(--sl-color-gray-3); }
+starlight-toc a[style*="--depth: 1"]::before { content: '◦'; }
+starlight-toc a[aria-current='true']::before { color: var(--sl-color-text-accent); }

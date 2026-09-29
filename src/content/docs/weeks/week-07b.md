@@ -1,7 +1,7 @@
 ---
 title: Week 7b — Catch-up, a second domain and the capstone brief
 sidebar:
-  label: W7b · Catch-up and capstone brief
+  label: W7b · Catch-up, capstone brief
 week: 7.5
 weekLabel: 7b
 status: outline
