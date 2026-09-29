@@ -18,6 +18,7 @@ Every diagram in the course uses one visual system, so a learner who has read on
 | --- | --- |
 | Canvas | 1600 × 900 (16:9) for the full "poster"; the web figure uses the diagram area only, at the same scale |
 | Margins | 40 px on all sides |
+| Font | Inter (the same as the site and slides); names semibold, descriptions regular. In SVG, `font-family="Inter, system-ui, sans-serif"`. |
 | Header | Step title in bold 40 px navy, a thin vertical divider, a one-line subtitle in 24 px, and on the right the week and step in 15 px amber capitals (for example `WEEK 0 · STEP 6 OF 7`) with `Agent Harness Engineering · harness.krishnamohan.co` in 13 px grey beneath it. A 4 px amber rule underneath. No dark header bar (saves ink). |
 | Diagram area | Below the header, about 440 px high |
 | Three cards | Under the diagram, equal width: **What goes wrong** (rose), **What we add** (green), **Result** (blue). Each card: a round outlined icon, a heading in 16 px capitals in the card's accent colour, and up to three bullets in 17 px, each under 45 characters. |

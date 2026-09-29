@@ -7,8 +7,9 @@
   --km-amber-light: #f0b855;
   --km-cream: #f5f0e8;
 
-  --sl-font: 'DM Sans', system-ui, sans-serif;
-  --km-font-display: 'Cormorant Garamond', Georgia, serif;
+  /* Inter everywhere: a clean, iOS-like sans. Optical sizing adjusts letter shapes for small and large text. */
+  --sl-font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --km-font-display: var(--sl-font);
 
   --sl-color-white: #f5f0e8;
   --sl-color-gray-1: #ece6db;
@@ -59,12 +60,15 @@
 h1#_top,
 .hero h1 {
   font-family: var(--km-font-display);
-  font-weight: 700;
-  letter-spacing: 0;
+  font-weight: 650;
+  letter-spacing: -0.02em;
 }
-h1#_top { font-size: 2.6rem; line-height: 1.1; }
-.sl-markdown-content h2 { font-size: 2rem; }
-.sl-markdown-content h3 { font-size: 1.5rem; }
+h1#_top { font-size: 2.25rem; line-height: 1.15; }
+.sl-markdown-content h2 { font-size: 1.6rem; }
+.sl-markdown-content h3 { font-size: 1.25rem; letter-spacing: -0.01em; }
+body { font-optical-sizing: auto; }
+/* Figures line up in tables (amounts, token counts). */
+.sl-markdown-content table { font-variant-numeric: tabular-nums; }
 
 /* Week header */
 .km-week-meta {
@@ -138,7 +142,7 @@ h1#_top { font-size: 2.6rem; line-height: 1.1; }
 .km-map { display: grid; gap: .5rem; margin: 1.5rem 0; }
 .km-map-act { border: 1px solid var(--sl-color-gray-5); border-radius: .6rem; padding: .9rem 1.1rem; background: var(--sl-color-gray-6); }
 .km-map-act p { margin: 0; font-size: var(--sl-text-sm); color: var(--sl-color-gray-2); }
-.km-map-act .km-map-title { font-family: var(--km-font-display); font-weight: 700; font-size: 1.3rem; color: var(--sl-color-white); margin-bottom: .25rem; }
+.km-map-act .km-map-title { font-family: var(--km-font-display); font-weight: 650; font-size: 1.1rem; color: var(--sl-color-white); margin-bottom: .25rem; }
 .km-map-core { border-color: var(--sl-color-accent); box-shadow: inset 4px 0 0 var(--sl-color-accent); }
 .km-map-gate { margin: 0 0 0 1.25rem; padding-left: 1rem; border-left: 2px dashed var(--sl-color-gray-4); font-size: var(--sl-text-sm); color: var(--sl-color-gray-2); }
 .km-map-gate span { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--sl-color-text-accent); margin-right: .4rem; }
