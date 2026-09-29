@@ -20,7 +20,7 @@ Each week has a slide deck on the course site, viewable in the browser and downl
 | --- | --- |
 | Size | 16:9, 1600 × 900 (PDF pages are the same) |
 | Background | White. No dark slides (printer friendly, same as the figures) |
-| Type | Cormorant Garamond for titles (as on krishnamohan.co); DM Sans for everything else; a monospace for code |
+| Type | Inter for everything (titles semibold, body regular), the same as the site and the figures; a monospace for code |
 | Title size | 48–56 px; body 26–30 px; nothing under 18 px |
 | Colours | Navy `#0d1b2a` text, amber `#c98a1f` accents (rules, step labels), pastel role colours from `figure-style.md` |
 | Footer | Every slide except the title: `Week N · <week title>` on the left, slide number on the right, 16 px grey |

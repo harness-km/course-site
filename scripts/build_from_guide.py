@@ -20,7 +20,7 @@ LIVE_BY_DEFAULT = {0, 1, 2, 3, 4, 5}      # pre-launch review; before the cohort
 
 SIDEBAR = {0: "W0 · Setup and orientation", 1: "W1 · Unpacking the black box", 2: "W2 · Reading invoices",
            3: "W3 · Tools and the agent loop", 4: "W4 · LangGraph fundamentals", 5: "W5 · Generate, audit, correct",
-           6: "W6 · Harness 1 MVP", 7: "W7 · Notebook to package", 7.5: "W7b · Catch-up and capstone brief",
+           6: "W6 · Harness 1 MVP", 7: "W7 · Notebook to package", 7.5: "W7b · Catch-up, capstone brief",
            8: "W8 · Kernel services", 9: "W9 · Durability and approval", 10: "W10 · Capstone sprint 1",
            10.5: "W10b · Capstone sprint 2", 11: "W11 · Capstone reflection"}
 
@@ -217,8 +217,9 @@ print(f"weeks: {count}")
 
 # ---------------------------------------------------------------- syllabus
 ov = H2["Course overview"]
-ov = re.sub(r"\*\*(What learners build|By the end, learners can|Course 1 and Course 2\.)\*\*",
-            lambda mm: "## " + mm.group(1).rstrip("."), ov)
+ov = re.sub(r"\*\*(What learners build|By the end, learners can|Course 1 and Course 2\.)\*\*[ \t]*",
+            lambda mm: "## " + mm.group(1).rstrip(".") + "\n\n", ov)
+ov = re.sub(r"\n{3,}", "\n\n", ov)
 ov = ov.replace("Its draft scope is in Appendix N.", "See [Course 2 (coming later)](/course-2/).")
 course_map = H2["The course map"]
 runs_intro = H2["How Course 1 runs"].split("### ")[0].strip()

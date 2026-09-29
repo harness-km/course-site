@@ -7,5 +7,7 @@
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page"
-  }
+  },
+  // Needed by `wrangler preview`, which builds a preview link for each branch and pull request.
+  "previews": {}
 }
