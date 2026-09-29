@@ -1,6 +1,6 @@
 # Agent Harness Engineering — course site
 
-Static site for course.krishnamohan.co, built with Astro Starlight and hosted on Cloudflare Pages.
+Static site for harness.krishnamohan.co, built with Astro Starlight and hosted on Cloudflare.
 
 ## Source of truth: the guide
 
@@ -44,7 +44,7 @@ Slides show even on outline weeks, so add them when you want learners to see the
 ## Workflow
 
 1. Claude edits files on a branch and opens a pull request.
-2. Cloudflare Pages builds a preview link for the pull request.
+2. Cloudflare builds a preview link for the pull request.
 3. Krishna reviews the preview and merges; the live site updates in about a minute.
 
 ## Local commands

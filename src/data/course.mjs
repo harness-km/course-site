@@ -1,5 +1,5 @@
 // Single place for course-wide settings. Edit these, not the components.
-export const SITE_URL = 'https://course.krishnamohan.co';
+export const SITE_URL = 'https://harness.krishnamohan.co';
 
 // GitHub owner (user or org) and the public starter template repo.
 // TODO: replace with the real GitHub account before launch.

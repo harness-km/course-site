@@ -4,7 +4,7 @@ Guidance for Claude (and anyone else) working in this repository. Read this befo
 
 ## What this is
 
-The public website for **Agent Harness Engineering, Course 1**, at `course.krishnamohan.co`. Built with Astro Starlight, hosted on Cloudflare Pages. Owner and reviewer: Krishna Mohan. Claude writes and edits; Krishna reviews the preview and approves before anything goes live.
+The public website for **Agent Harness Engineering, Course 1**, at `harness.krishnamohan.co`. Built with Astro Starlight, hosted on Cloudflare. Owner and reviewer: Krishna Mohan. Claude writes and edits; Krishna reviews the preview and approves before anything goes live.
 
 It sits in the workspace folder `agent-harness-course/` next to:
 
