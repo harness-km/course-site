@@ -1,0 +1,11 @@
+// Cloudflare deploy settings for the course site.
+// The site is fully static: Astro builds it into dist/ and Cloudflare serves those files as they are.
+// Having this file stops `wrangler deploy` from trying to reconfigure the Astro project.
+{
+  "name": "course-site",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}
