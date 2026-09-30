@@ -26,6 +26,8 @@ Everything runs in a browser with almost no setup, so every learner has the same
 | Offline mode | A fake model adapter | Self-checks and demos run without API calls |
 | Collaboration | GitHub template repository, GitHub Discussions, WhatsApp, course site with chatbot | All free |
 
+Git reference: [Git documentation](https://git-scm.com/docs). For GitHub itself (repositories, Codespaces, Discussions): [GitHub Docs](https://docs.github.com).
+
 ## Enterprise equivalents
 
 | Concept | What learners use | Enterprise equivalent |

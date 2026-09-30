@@ -1,22 +1,22 @@
 ---
-title: Week 0 — Setup and orientation
+title: Week 0 — Set up your tools
 sidebar:
-  label: W0 · Setup and orientation
+  label: W0 · Set up your tools
 week: 0
 weekLabel: '0'
 status: live
 summary: Every learner arrives at Week 1 with working keys, a spend limit, their own repository, the shared course dataset and a first look at Codespaces, so the first live session is spent on ideas, not setup.
 outcomes:
 - A Colab notebook reads the API key from Colab Secrets and gets a reply from Claude
-- A monthly spend limit is set in the Anthropic Console
-- The learner's own copy of the starter repository exists, with a first notebook saved into it from Colab
-- A Codespace has been opened once and the terminal used for `git status` and `make test`
+- A monthly spend limit and an email alert are set in the Claude Console
+- The learner's own private copy of the starter repository exists, with the setup notebook saved into it from Colab
+- A Codespace has been opened once and the terminal used for `git status`, `make test` and a commit
 - 'The course dataset is generated and explored: suppliers, SKUs, purchase orders, goods receipts and invoices'
 security:
   text: Where API keys must never appear (notebooks, screenshots, Git history, WhatsApp, GitHub Discussions); why a spend limit is a security control; why the course uses synthetic data only, never real supplier, customer or company data.
   category: Unbounded consumption
 selfCheck: The last setup cell prints `Secrets OK · Claude reachable · Drive mounted · Dataset OK`, and your repository shows the saved setup notebook.
-mvw: Tasks 2–6. Everything else can be finished before Week 2.
+mvw: Steps 2–7. Everything else can be finished before Week 2.
 portfolio:
 - The practice ADR
 lab:
@@ -26,122 +26,218 @@ lab:
 
 ## Reading
 
-This reading sets up the whole course. It explains what an agent harness is, walks through the business process Harness 1 automates, and covers how the course runs, how to keep your API key safe, and what the offline self-checks can and cannot tell you. Nothing here needs code yet. Read it before you run the setup notebook, so each step makes sense when you get to it.
+This week you set up the tools for the whole course. Nothing is installed on your computer: everything runs in the browser. Plan on <span class="key">1–2 hours</span>. Read this page first, then work through the assignment below.
 
-### What an agent harness is
+### What lives where
 
-When people say "the agent", they usually mean the model. The model is one component. It reads text (and images) and writes text back, one request at a time. It cannot open a file, query a database, remember yesterday, ask a manager for approval or notice that it made an arithmetic mistake.
+<!-- figure: week-00/step-01-where (designed after this page is approved) -->
 
-The **harness** is everything around the model that makes it useful and safe:
+Each tool holds one thing. If you know where something lives, you know where to look when it goes wrong.
 
-- **Tools** that let it look things up or act, each with a narrow, defined job.
-- **State** that records where a piece of work has got to, so a crash does not lose it.
-- **Checks** in plain code that confirm what the model produced before anyone relies on it.
-- **Approvals** that pause the work before an irreversible step, such as a payment.
-- **Logging and tracing** so you can see afterwards what happened, what it cost and who decided.
+- **Colab** runs your notebooks, Weeks 1–6.
+- **Google Drive** holds the course dataset, so it survives a Colab reset.
+- **GitHub** holds your saved work, in your own <span class="key">private</span> repository.
+- **Colab Secrets** holds your API key. Nowhere else.
+- **Claude Console** holds your spend limit and billing.
+- **Codespaces** (VS Code in the browser) replaces Colab from <span class="key">Week 7</span>. You open it once this week as a rehearsal.
 
-In n8n you already build harnesses: the AI node is the model, and the IF branches, Wait nodes and error workflows around it are the harness. In this course you build each piece yourself, in Python, and see what it sends and receives: a raw API call in Week 1, then LangChain, then LangGraph. The aim is not to avoid frameworks. It is to be able to say what a framework does for you, and what it hides.
+Local VS Code is optional. Nothing in the course needs it.
 
-### Procure-to-pay in one page
+### Tools and costs
 
-Harness 1 automates one slice of a finance process called **procure-to-pay**: everything from deciding to buy something to paying for it. You do not need a finance background; you need to know five documents and one check. The course dataset belongs to a fictional FMCG distributor, **Nilgiri Distributors Pvt Ltd** in Bengaluru, and we will follow one order through it.
+Each tool links to the step where you set it up.
 
-1. **Purchase order (PO).** Nilgiri agrees to buy goods at an agreed price. On 18 August 2026 it raised **PO-1001** to Sahyadri Beverages Pvt Ltd (Mysuru): 120 cases of Instant Coffee 100g at ₹450 a case, and 80 cases of Soda Water 500ml at ₹300 a case.
-2. **Goods receipt note (GRN).** The warehouse records what actually arrived. **GRN-5001**, dated 23 August, shows all 120 and all 80 cases received.
-3. **Supplier invoice.** The supplier asks to be paid. **INV-A** is Sahyadri's invoice SBP/26-27/0412, dated 2 September, quoting PO-1001. It bills ₹54,000 for the coffee and ₹24,000 for the soda water: a taxable value of ₹78,000, plus tax of ₹14,040, for a total of **₹92,040**.
-4. **Three-way match.** Before paying, accounts payable checks that the three documents agree: the invoice bills only what was ordered, at the ordered price, and only what was received. For INV-A they all agree.
-5. **Payment.** The supplier is paid, into the bank account held in Nilgiri's **supplier master** (its own record of each supplier), never into an account printed on the invoice.
+| Tool | What it is for | Weeks | Setup time (estimate) | Cost |
+| --- | --- | --- | --- | --- |
+| [Google account, Colab](#step-1-google-account-and-colab) | Runs notebooks | 0–6 | 5 min | Free |
+| [Google Drive](#step-6-run-the-setup-notebook) | Holds the dataset | 0–6 | none | Free |
+| [GitHub](#step-2-github-account) | Saves your work | 0–11 | 10 min | Free |
+| [GitHub Discussions](#step-9-meet-your-group) | Questions and answers | 0–11 | 2 min | Free |
+| [Claude Console, API key](#step-3-claude-account-and-spend-limit) | Calls to Claude; spend limit | 0–11 | 15 min | About USD 15–30 for the course (estimate) |
+| [Colab Secrets](#step-5-create-your-key-and-add-it-to-colab) | Holds the key | 0–6 | 2 min | Free |
+| [Codespaces](#step-8-try-codespaces-once) | VS Code in the browser | 0, then 7–11 | 10 min | Free within 120 core-hours a month (about 60 hours on 2 cores) |
+| [Langfuse](/weeks/week-09/) | Tracing | 9–11 | Set up in Week 9 | Hobby plan free |
+| [WhatsApp](#step-9-meet-your-group) | Announcements, your pod | 0–11 | 2 min | Free |
 
-That last rule matters later. Anyone can print a bank account on a PDF. The supplier master is the source of truth, and changing it is a controlled, approved action.
+Set a monthly spend limit of <span class="key">USD 40</span> with an email alert at <span class="key">USD 20</span>. [Appendix D](/reference/d-costs/) has the detail.
 
-The dataset contains 40 invoices. INV-A is clean; many of the others break one agreement on purpose (a price above the PO, a duplicate, a wrong tax calculation, a changed bank account). By Week 6 your harness will reach the right decision on each.
+The setup notebook installs pinned versions of everything, so nothing changes mid-course. You meet each library when you need it:
 
-### GST basics, as a teaching simplification
+- **Python 3.12**: every week
+- **LangChain**, through `init_chat_model`: Week 1
+- **Pydantic v2**: Week 2
+- **SQLite**: Week 3
+- **LangGraph**: Week 4
+- **Gradio**: Week 6
+- **YAML config** and **pytest**: Week 7
+- **Fake model adapter**: self-checks that run without calling Claude
 
-Indian invoices carry **GST** (Goods and Services Tax). The course uses a simplified version of the rules. It is enough to check arithmetic and spot inconsistencies; it is not compliance guidance.
+### GitHub in brief
 
-- When the supplier and the buyer are in the **same state**, the tax is split into two equal halves: **CGST** (central) and **SGST** (state). INV-A is Mysuru to Bengaluru, both Karnataka, at 18%: CGST 9% (₹7,020) plus SGST 9% (₹7,020).
-- When they are in **different states**, the whole tax is one **IGST** (integrated) amount. Deccan Personal Care Ltd in Pune (Maharashtra) bills Nilgiri with IGST only.
-- Each registered business has a **GSTIN**, a 15-character tax ID. The first two digits are the state code (29 is Karnataka, 27 Maharashtra, 33 Tamil Nadu). The next ten characters follow the shape of a PAN (five letters, four digits, one letter), then one more character, a fixed `Z`, and a final check character. Sahyadri's GSTIN is `29GHTWA4257Z1ZH`; Nilgiri's is `29AAECN4821K1Z6`.
+GitHub keeps your work safe and shows every version of it. Six words cover most of what you need:
 
-So the first two digits of the supplier's GSTIN, compared with the buyer's, tell you which kind of tax to expect. In Week 2 you will turn the GSTIN shape into a validator.
+- **Repository (repo):** a project folder that remembers every saved version.
+- **Template:** a repo you copy to start your own. The course template is `harness-starter`.
+- **Private:** only you can see it. Your course repo is <span class="key">private</span>.
+- **Commit:** one saved version, with a short note saying what changed.
+- **Push and pull:** push sends your commits to GitHub; pull brings changes from GitHub to your copy.
+- **Branch:** a separate line of work, so an experiment does not touch your main copy.
 
-### How the course runs
+**Your own copy of the course template.** The template lives at [github.com/harness-km/harness-starter](https://github.com/harness-km/harness-starter). It is public, so you need no invitation, but you must be <span class="key">signed in</span> to GitHub to see the **Use this template** button. Using the template gives you a fresh repo of your own, with no link back to anyone else's work. [Step 2](#step-2-github-account) has the clicks.
 
-The reading is posted three days before each live session and takes 30 to 45 minutes. The session is two hours of discussion, not a lecture: sticking points from the pulse poll first, then the concept, the security question and one design decision. Come having read the page; you do not need to have started the assignment.
+**How your work moves.** Every save follows the same loop.
 
-The assignment has numbered **core** steps and optional **stretch** steps. The **self-check** is a set of tests you run yourself at the end of a notebook to confirm the core works. The **minimum viable week** names the one thing to finish if work gets busy, so you stay on track without doing everything.
+![The Git daily workflow: check the status, stage your files, commit, pull, push](/images/git/git-daily-workflow.webp)
 
-There is no submission, no grading and no certificate. You leave with a portfolio: your code, a short ADR (architecture decision record) each week, a threat model that grows with the build, and your own cost numbers. Your first ADR is a practice one: would you rebuild your favourite n8n workflow in code, and why? Half a page is enough.
+- **Weeks 1–6:** Colab runs the loop for you. **Save a copy in GitHub** is a commit and a push in one click.
+- **From Week 7:** in Codespaces you type the commands yourself. You rehearse them once in [Step 8](#step-8-try-codespaces-once).
 
-Your **pod of three** is the first place to ask for help. In the weekly 20-minute pod meeting, each person shows their self-check output and explains one function they wrote. Explaining your own code is the quickest way to find out whether you understand it, especially if an AI assistant helped write it.
+The picture mentions teammates. In this course the other side of the loop is you, in another tool: Colab, Codespaces and GitHub stay in step.
 
-### Keys, spend limits and synthetic data
+**Branches.** You will rarely create one yourself.
 
-Your Anthropic API key is a password that spends money. Anyone who has it can run calls on your account until the account stops them. Keep it in exactly one place: **Colab Secrets** now, Codespaces secrets from Week 7. Never paste it into a cell, a screenshot, a WhatsApp message, a GitHub Discussion or a file in your repository. Once a key reaches Git history, treat it as public, even if you delete the file later: the history keeps it, and so does anyone's clone.
+![Managing branches: list, create, switch, merge and view history; local branches and their copies on GitHub](/images/git/git-branches.webp)
 
-A **monthly spend limit** in the Anthropic Console (suggested USD 40, with an alert at USD 20) is a security control, not only a budgeting one. It caps the damage from two failures you cannot fully rule out: a leaked key, and your own agent stuck in a loop calling the model again and again (unbounded consumption). It does not prevent the mistake; it limits what the mistake costs, and the alert tells you early.
+- `main` is your working copy.
+- From Week 7, `make catch-up` first saves your work on a <span class="key">backup branch</span>, then copies in the published checkpoint. Nothing you wrote is lost.
+- `origin/main` is GitHub's copy of `main`. `git pull` brings your `main` up to date with it.
 
-The course uses **synthetic data only**. Every supplier, GSTIN and bank account in the dataset is generated from a fixed seed, so everyone has identical data and nobody's real records reach a model provider. Do not substitute real supplier, customer or company data, even in your capstone, where you will generate synthetic cases for your own process. Sending real invoices to an external API is a data-protection decision for your organisation, not for a course notebook.
+**Look things up.** [Git documentation](https://git-scm.com/docs) covers every command. [GitHub Docs](https://docs.github.com) covers the website: repositories, Codespaces and Discussions.
 
-### What the fake model is, and is not
+### Keeping your key safe
 
-From Week 1, most self-checks run against a **fake model** included in the course helpers. It never calls the network, costs nothing and gives the same answer every time. It answers from the dataset's answer key: asked to read an invoice, it returns that invoice's known transcription; asked for structured output, it returns the invoice as an ideal reader would extract it.
+<!-- figure: week-00/step-03-key (designed after this page is approved) -->
 
-That makes it good at one job: checking that **your code handles responses correctly**. Does it read the right field, raise an error when a reply is cut off, log a validation failure instead of hiding it?
+Your API key is a password that <span class="key">spends money</span>. Anyone who has it can run calls on your account.
 
-It is not a model, and it cannot tell you how well real Claude reads a blurred scan or follows your prompt. Real Claude can behave differently, and sometimes will. That is why self-checks accept `live=True` to repeat the check against Claude, and why the setup self-check this week talks to Claude directly: it has to prove your key works.
+- Keep it in <span class="key">one place</span>: Colab Secrets now, Codespaces secrets from Week 7.
+- Never put it in a cell, a screenshot, WhatsApp, Discussions or any file in your repository.
+- Once a key reaches Git history, treat it as public. Deleting the file does not remove it. Revoke the key in the Console and make a new one.
 
-### Saving your work to GitHub
+The spend limit is a <span class="key">security control</span>, not only a budget. It caps the cost of a leaked key, or of your own agent stuck in a loop. The alert tells you early.
 
-Colab notebooks live in Google Drive and do not sync to GitHub on their own. When you finish a session of work, use **File → Save a copy in GitHub** and choose your repository and the week's folder (`week-00/setup.ipynb` this week). Each save becomes a commit: your portfolio and your backup. If you forget, your repository shows the old version. From Week 7 you work in Codespaces with Git directly; this week's single visit is a rehearsal, so the terminal, `git status` and `make test` are not new when it matters.
+### What to expect
 
-### Self-quiz
-
-**1. Predict the output.** A new invoice arrives from Deccan Personal Care Ltd. Nilgiri's GSTIN starts with `29`.
-
-```python
-invoice = {"supplier_gstin": "27EHUUJ8019V1ZC", "taxable_total": 10000, "gst_rate": 18}
-same_state = invoice["supplier_gstin"][:2] == "29"
-print(same_state)
-```
-
-What does the cell print, and which tax amounts (CGST, SGST, IGST) and total should the invoice show?
-
-<details><summary>Answer</summary>
-
-It prints `False`: the supplier's state code is 27 (Maharashtra), not 29 (Karnataka). An inter-state supply carries IGST only, so the invoice should show CGST ₹0, SGST ₹0, IGST ₹1,800 (18% of ₹10,000), and a total of ₹11,800. An invoice from this supplier showing CGST and SGST would be worth a closer look.
-
-</details>
-
-**2. What is wrong with this trace?** A clerk's notes on an invoice for PO-1001:
-
-```text
-PO-1001:   Instant Coffee 120 cases @ 450;  Soda Water 80 cases @ 300
-Invoice:   Instant Coffee 120 cases @ 450;  Soda Water 80 cases @ 300   total 92,040
-GRN:       Instant Coffee 100 cases;        Soda Water 80 cases
-Decision:  PO and invoice agree on quantity and price. Approve 92,040.
-```
-
-<details><summary>Answer</summary>
-
-The clerk did a two-way match (PO against invoice) and ignored the goods receipt. The GRN shows only 100 cases of coffee arrived, so 20 cases (₹9,000 before tax) are billed but not received. A three-way match would hold the invoice or approve only what was received. Harness 1 has to check all three documents, in code, every time.
-
-</details>
+- **Effort:** plan on <span class="key">2–3 hours of your own work for each hour of live session</span>. That is 4–6 hours a week on top of the 2-hour session, about 6–8 hours in total.
+- **Setup:** 1–2 hours, once.
+- **Data:** synthetic only. Every supplier, invoice and bank account is generated. Never use real company or personal data, even in your capstone.
 
 ## Assignment
 
-1. Create or confirm a Google account and open Google Colab.
-2. Create a GitHub account. On the `harness-starter` repository, click **Use this template → Create a new repository** to make your own copy.
-3. In the Anthropic Console, create an API key and set a monthly spend limit (suggested: USD 40 for Course 1, with an email alert at USD 20).
-4. In Colab, open **Secrets** (key icon, left sidebar) → **Add new secret** → name `ANTHROPIC_API_KEY` → paste the key → turn on **Notebook access**.
-5. Run `week-00/setup.ipynb`. It mounts Google Drive, generates the course dataset, checks the secret, calls Claude and prints versions.
-6. Save the notebook into your repository: **File → Save a copy in GitHub**, choose your repository and the `week-00/` folder. When GitHub asks for authorisation, tick the option to include private repositories. Save again after every edit: Colab does not sync on its own. This is how every Colab assignment is kept.
-7. The setup notebook creates `distributor.db` for the course's fictional FMCG distributor (in Codespaces: `make data`): about 500 SKUs, 8 suppliers, purchase orders, goods receipt notes (GRNs) and 40 sample supplier invoices as PDFs. The generator uses a fixed seed, so everyone gets identical data, and it saves the database to your Google Drive so it survives a Colab reset; every lab's first cell re-creates it if it is missing.
-8. Work through the dataset tour: pick one purchase order and follow it to what arrived (GRN) and what was billed (invoice).
-9. Open your repository in a Codespace once (**Code → Codespaces → Create codespace**), run `git status` and `make test` in the terminal, then make catch-up WEEK=00 as a rehearsal (it saves a backup branch and changes nothing else). Commit anything you changed, then delete the Codespace; Week 7 starts with a fresh one.
-10. Join the WhatsApp group (link in your welcome email), meet your pod, and post one goal in the Introductions category of GitHub Discussions.
+Work through the nine steps in order and tick each box as you go. Your ticks are saved in this browser. Allow 1–2 hours. Stuck for more than 10 minutes? Ask in the WhatsApp group. Someone has hit the same thing before.
 
-**Business primer: procure-to-pay in one page.** Purchase order (what we agreed to buy, at what price) → goods receipt (what actually arrived) → supplier invoice (what we are asked to pay) → three-way match (do all three agree?) → payment. Harness 1 automates the invoice-to-payment decision.
+### Step 1: Google account and Colab
 
-**Templates introduced:** the ADR template and the threat-model template (Appendices A and B). Practice ADR: "Why I would or would not rebuild my favourite n8n workflow in code."
+- [ ] Sign in to Google, or create an account at [accounts.google.com](https://accounts.google.com).
+- [ ] Open [colab.research.google.com](https://colab.research.google.com). If a window pops up, close it. You do not need a new notebook: the course gives you one in Step 4.
+
+**You should see:** the Colab page, with your Google picture at the top right.
+
+### Step 2: GitHub account
+
+- [ ] Create an account at [github.com](https://github.com).
+- [ ] Turn on two-step verification. Click your profile picture (top right) → **Settings** → **Password and authentication** → **Enable two-factor authentication**.
+- [ ] Open the course template: [github.com/harness-km/harness-starter](https://github.com/harness-km/harness-starter). It is public, so you need no invitation.
+- [ ] Click **Use this template** → **Create a new repository**.
+- [ ] Name it `harness-course`, choose **Private**, and click **Create repository**.
+
+**You should see:** your own repository, with a padlock beside its name.
+
+### Step 3: Claude account and spend limit
+
+- [ ] Sign up at [platform.claude.com](https://platform.claude.com).
+- [ ] Add a payment method and buy the smallest credit top-up. Card issued outside the US? Check it allows international online payments.
+- [ ] Set a spend limit under **Limits**: USD 40 a month, with an email alert at USD 20.
+
+**You should see:** the limit and the alert under Limits. You create the key itself in Step 5.
+
+### Step 4: Open the setup notebook
+
+- [ ] Scroll to the top of this page and click **Open lab in Colab**. The setup notebook opens in Colab.
+- [ ] If Colab keeps loading, see "If something goes wrong" at the end of this assignment.
+
+**You should see:** a notebook called `setup.ipynb`. This is the course's copy. In Step 7 you save it into your own repository.
+
+### Step 5: Create your key and add it to Colab
+
+- [ ] In a new browser tab, open [platform.claude.com](https://platform.claude.com) → **API keys** → **Create key**. Name it `harness-course`.
+- [ ] Copy the key. It is shown only once, so go straight to the next box.
+- [ ] Back in the setup notebook, click the **key icon** on the left.
+- [ ] Click **Add new secret**. Name: `ANTHROPIC_API_KEY`. Value: paste your key.
+- [ ] Switch **Notebook access** on.
+
+**You should see:** the secret in the list, with Notebook access on.
+
+### Step 6: Run the setup notebook
+
+- [ ] Click **Runtime** → **Run all**.
+- [ ] If Colab warns that the notebook is not authored by Google, click **Run anyway**.
+- [ ] Allow Google Drive access when asked.
+
+**You should see:** the last line print `Secrets OK · Claude reachable · Drive mounted · Dataset OK`.
+
+### Step 7: Save your work to GitHub
+
+- [ ] Click **File** → **Save a copy in GitHub**.
+- [ ] The first time, GitHub asks for permission. Tick **Include private repos** and allow access.
+- [ ] Choose `harness-course`, branch `main`, path `week-00/setup.ipynb`. Click **OK**.
+- [ ] Remember: Colab does not save to GitHub on its own. Save again after every edit.
+
+**You should see:** a new commit on your repository page, a few seconds old.
+
+### Step 8: Try Codespaces once
+
+- [ ] On your repository page, click **Code** → **Codespaces** → **Create codespace on main**. The first start takes a few minutes.
+- [ ] Open a terminal: **Terminal** → **New Terminal**.
+- [ ] Type each line and press Enter: `git status`, then `make test`, then `make catch-up WEEK=00`.
+- [ ] Save any changes: `git add -A`, then `git commit -m "Week 0 rehearsal"`, then `git push`. If Git says "nothing to commit", that is fine.
+- [ ] Delete the Codespace: go to [github.com/codespaces](https://github.com/codespaces), click **⋯** next to it, then **Delete**.
+
+**You should see:** `make test` passing, and no Codespace left in your list.
+
+### Step 9: Meet your group
+
+- [ ] Join the WhatsApp group (link in your welcome email).
+- [ ] Say hello to your pod.
+- [ ] Post one goal in GitHub Discussions, in the **Introductions** category.
+
+**You should see:** your post in Discussions.
+
+### If you have time: tour the dataset
+
+- [ ] The setup notebook created a small database for a fictional distributor: suppliers, products, purchase orders, deliveries and invoices. Pick one purchase order and follow it to what arrived and what was billed.
+
+:::caution[If something goes wrong]
+- **Colab keeps loading and never opens:** open the link in a private window (Ctrl+Shift+N) and sign in to one Google account only. If that works, sign out of your other Google accounts, or allow cookies for google.com, or pause your ad-blocker for Colab.
+- **Error saying the notebook has no access to the secret:** click the key icon and switch **Notebook access** on. Each notebook needs its own permission.
+- **Your repository is not in the list:** it is private. Tick **Include private repos** and allow access again.
+- **Colab reset and the dataset is gone:** run the first cell again. It rebuilds the dataset.
+- **Save a copy in GitHub failed:** check you are signed in to the right GitHub account and save again. Your work is still in Google Drive.
+:::
+
+### Your first ADR (practice)
+
+An **ADR** (architecture decision record) is a half-page note about one design decision: what you had to decide, the options, what you chose, and what it will cost you. You write one each week. Together they show how your thinking grew, and they are the part of your portfolio employers read. Nobody grades them.
+
+This week's question: **would you rebuild your favourite n8n workflow in code? Why, or why not?** There is no right answer. What matters is the reason.
+
+- [ ] Open the [ADR template](/reference/a-c-templates/) and copy the block under "A. ADR template".
+- [ ] On your repository page, click **Add file** → **Create new file**. Name it `week-00/adr-00-practice.md` and paste the template.
+- [ ] Fill in the three parts, 2–3 sentences each: **Context** (the workflow and what matters: cost, speed, who maintains it), **Options considered** (keep it in n8n, or rebuild it in code, each with a pro and a con), **Decision and consequences** (your choice, the main reason, and what gets harder).
+- [ ] Click **Commit changes**.
+
+<details><summary>A short example</summary>
+
+**ADR 0: Keep the weekly sales email in n8n**
+
+**Context.** An n8n workflow emails the sales team a weekly summary. It breaks about once a quarter when a column name changes. Only I maintain it.
+
+**Options considered.** 1. Keep it in n8n: quick to change, anyone can read it; no tests. 2. Rebuild in Python: tests catch a renamed column; slower to change, and only I can read it.
+
+**Decision and consequences.** Keep it in n8n, because a quarterly fix takes ten minutes. Harder: breakages still reach users first. Revisit if it starts feeding a payment or a customer.
+
+</details>
+
+The threat-model template ([Appendix B](/reference/a-c-templates/)) comes in later weeks.
+
+---

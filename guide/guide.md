@@ -107,7 +107,7 @@ Course 1 has a self-paced Week 0, 12 live sessions in two acts and a capstone, a
 
 | Session | Week | Focus | Gate |
 | --- | --- | --- | --- |
-| — | 0 | Setup and orientation (self-paced) | Setup self-check passes |
+| — | 0 | Set up your tools (self-paced) | Setup self-check passes |
 | 1 | 1 | Unpacking the black box |  |
 | 2 | 2 | Reading invoices: vision and structured output |  |
 | 3 | 3 | Tools and the agent loop by hand |  |
@@ -146,6 +146,8 @@ Everything runs in a browser with almost no setup, so every learner has the same
 | Testing | pytest and a YAML evaluation runner | One runner for every domain |
 | Offline mode | A fake model adapter | Self-checks and demos run without API calls |
 | Collaboration | GitHub template repository, GitHub Discussions, WhatsApp, course site with chatbot | All free |
+
+Git reference: [Git documentation](https://git-scm.com/docs). For GitHub itself (repositories, Codespaces, Discussions): [GitHub Docs](https://docs.github.com).
 
 ### Enterprise equivalents
 
@@ -250,42 +252,143 @@ Every run carries one run ID, so any problem can be followed end to end. Course 
 
 The troubleshooting path: logs for the run ID → trace → audit entry → replay the checkpointed run locally (Appendix M).
 
-## Week 0 — Setup and orientation (self-paced)
+## Week 0 — Set up your tools (self-paced)
 
 Every learner arrives at Week 1 with working keys, a spend limit, their own repository, the shared course dataset and a first look at Codespaces, so the first live session is spent on ideas, not setup.
 
 **Outcomes**
 
 - A Colab notebook reads the API key from Colab Secrets and gets a reply from Claude
-- A monthly spend limit is set in the Anthropic Console
-- The learner's own copy of the starter repository exists, with a first notebook saved into it from Colab
-- A Codespace has been opened once and the terminal used for `git status` and `make test`
+- A monthly spend limit and an email alert are set in the Claude Console
+- The learner's own private copy of the starter repository exists, with the setup notebook saved into it from Colab
+- A Codespace has been opened once and the terminal used for `git status`, `make test` and a commit
 - The course dataset is generated and explored: suppliers, SKUs, purchase orders, goods receipts and invoices
 
-**Tasks (core)**
+**Tasks (core)** Work through the nine steps in order and tick each box as you go. Your ticks are saved in this browser. Allow 1–2 hours. Stuck for more than 10 minutes? Ask in the WhatsApp group. Someone has hit the same thing before.
 
-1. Create or confirm a Google account and open Google Colab.
-2. Create a GitHub account. On the `harness-starter` repository, click **Use this template → Create a new repository** to make your own copy.
-3. In the Anthropic Console, create an API key and set a monthly spend limit (suggested: USD 40 for Course 1, with an email alert at USD 20).
-4. In Colab, open **Secrets** (key icon, left sidebar) → **Add new secret** → name `ANTHROPIC_API_KEY` → paste the key → turn on **Notebook access**.
-5. Run `week-00/setup.ipynb`. It mounts Google Drive, generates the course dataset, checks the secret, calls Claude and prints versions.
-6. Save the notebook into your repository: **File → Save a copy in GitHub**, choose your repository and the `week-00/` folder. When GitHub asks for authorisation, tick the option to include private repositories. Save again after every edit: Colab does not sync on its own. This is how every Colab assignment is kept.
-7. The setup notebook creates `distributor.db` for the course's fictional FMCG distributor (in Codespaces: `make data`): about 500 SKUs, 8 suppliers, purchase orders, goods receipt notes (GRNs) and 40 sample supplier invoices as PDFs. The generator uses a fixed seed, so everyone gets identical data, and it saves the database to your Google Drive so it survives a Colab reset; every lab's first cell re-creates it if it is missing.
-8. Work through the dataset tour: pick one purchase order and follow it to what arrived (GRN) and what was billed (invoice).
-9. Open your repository in a Codespace once (**Code → Codespaces → Create codespace**), run `git status` and `make test` in the terminal, then make catch-up WEEK=00 as a rehearsal (it saves a backup branch and changes nothing else). Commit anything you changed, then delete the Codespace; Week 7 starts with a fresh one.
-10. Join the WhatsApp group (link in your welcome email), meet your pod, and post one goal in the Introductions category of GitHub Discussions.
+### Step 1: Google account and Colab
 
-**Business primer: procure-to-pay in one page.** Purchase order (what we agreed to buy, at what price) → goods receipt (what actually arrived) → supplier invoice (what we are asked to pay) → three-way match (do all three agree?) → payment. Harness 1 automates the invoice-to-payment decision.
+- [ ] Sign in to Google, or create an account at [accounts.google.com](https://accounts.google.com).
+- [ ] Open [colab.research.google.com](https://colab.research.google.com). If a window pops up, close it. You do not need a new notebook: the course gives you one in Step 4.
 
-**Templates introduced:** the ADR template and the threat-model template (Appendices A and B). Practice ADR: "Why I would or would not rebuild my favourite n8n workflow in code."
+**You should see:** the Colab page, with your Google picture at the top right.
+
+### Step 2: GitHub account
+
+- [ ] Create an account at [github.com](https://github.com).
+- [ ] Turn on two-step verification. Click your profile picture (top right) → **Settings** → **Password and authentication** → **Enable two-factor authentication**.
+- [ ] Open the course template: [github.com/harness-km/harness-starter](https://github.com/harness-km/harness-starter). It is public, so you need no invitation.
+- [ ] Click **Use this template** → **Create a new repository**.
+- [ ] Name it `harness-course`, choose **Private**, and click **Create repository**.
+
+**You should see:** your own repository, with a padlock beside its name.
+
+### Step 3: Claude account and spend limit
+
+- [ ] Sign up at [platform.claude.com](https://platform.claude.com).
+- [ ] Add a payment method and buy the smallest credit top-up. Card issued outside the US? Check it allows international online payments.
+- [ ] Set a spend limit under **Limits**: USD 40 a month, with an email alert at USD 20.
+
+**You should see:** the limit and the alert under Limits. You create the key itself in Step 5.
+
+### Step 4: Open the setup notebook
+
+- [ ] Scroll to the top of this page and click **Open lab in Colab**. The setup notebook opens in Colab.
+- [ ] If Colab keeps loading, see "If something goes wrong" at the end of this assignment.
+
+**You should see:** a notebook called `setup.ipynb`. This is the course's copy. In Step 7 you save it into your own repository.
+
+### Step 5: Create your key and add it to Colab
+
+- [ ] In a new browser tab, open [platform.claude.com](https://platform.claude.com) → **API keys** → **Create key**. Name it `harness-course`.
+- [ ] Copy the key. It is shown only once, so go straight to the next box.
+- [ ] Back in the setup notebook, click the **key icon** on the left.
+- [ ] Click **Add new secret**. Name: `ANTHROPIC_API_KEY`. Value: paste your key.
+- [ ] Switch **Notebook access** on.
+
+**You should see:** the secret in the list, with Notebook access on.
+
+### Step 6: Run the setup notebook
+
+- [ ] Click **Runtime** → **Run all**.
+- [ ] If Colab warns that the notebook is not authored by Google, click **Run anyway**.
+- [ ] Allow Google Drive access when asked.
+
+**You should see:** the last line print `Secrets OK · Claude reachable · Drive mounted · Dataset OK`.
+
+### Step 7: Save your work to GitHub
+
+- [ ] Click **File** → **Save a copy in GitHub**.
+- [ ] The first time, GitHub asks for permission. Tick **Include private repos** and allow access.
+- [ ] Choose `harness-course`, branch `main`, path `week-00/setup.ipynb`. Click **OK**.
+- [ ] Remember: Colab does not save to GitHub on its own. Save again after every edit.
+
+**You should see:** a new commit on your repository page, a few seconds old.
+
+### Step 8: Try Codespaces once
+
+- [ ] On your repository page, click **Code** → **Codespaces** → **Create codespace on main**. The first start takes a few minutes.
+- [ ] Open a terminal: **Terminal** → **New Terminal**.
+- [ ] Type each line and press Enter: `git status`, then `make test`, then `make catch-up WEEK=00`.
+- [ ] Save any changes: `git add -A`, then `git commit -m "Week 0 rehearsal"`, then `git push`. If Git says "nothing to commit", that is fine.
+- [ ] Delete the Codespace: go to [github.com/codespaces](https://github.com/codespaces), click **⋯** next to it, then **Delete**.
+
+**You should see:** `make test` passing, and no Codespace left in your list.
+
+### Step 9: Meet your group
+
+- [ ] Join the WhatsApp group (link in your welcome email).
+- [ ] Say hello to your pod.
+- [ ] Post one goal in GitHub Discussions, in the **Introductions** category.
+
+**You should see:** your post in Discussions.
+
+### If you have time: tour the dataset
+
+- [ ] The setup notebook created a small database for a fictional distributor: suppliers, products, purchase orders, deliveries and invoices. Pick one purchase order and follow it to what arrived and what was billed.
+
+:::caution[If something goes wrong]
+- **Colab keeps loading and never opens:** open the link in a private window (Ctrl+Shift+N) and sign in to one Google account only. If that works, sign out of your other Google accounts, or allow cookies for google.com, or pause your ad-blocker for Colab.
+- **Error saying the notebook has no access to the secret:** click the key icon and switch **Notebook access** on. Each notebook needs its own permission.
+- **Your repository is not in the list:** it is private. Tick **Include private repos** and allow access again.
+- **Colab reset and the dataset is gone:** run the first cell again. It rebuilds the dataset.
+- **Save a copy in GitHub failed:** check you are signed in to the right GitHub account and save again. Your work is still in Google Drive.
+:::
+
+### Your first ADR (practice)
+
+An **ADR** (architecture decision record) is a half-page note about one design decision: what you had to decide, the options, what you chose, and what it will cost you. You write one each week. Together they show how your thinking grew, and they are the part of your portfolio employers read. Nobody grades them.
+
+This week's question: **would you rebuild your favourite n8n workflow in code? Why, or why not?** There is no right answer. What matters is the reason.
+
+- [ ] Open the [ADR template](/reference/a-c-templates/) and copy the block under "A. ADR template".
+- [ ] On your repository page, click **Add file** → **Create new file**. Name it `week-00/adr-00-practice.md` and paste the template.
+- [ ] Fill in the three parts, 2–3 sentences each: **Context** (the workflow and what matters: cost, speed, who maintains it), **Options considered** (keep it in n8n, or rebuild it in code, each with a pro and a con), **Decision and consequences** (your choice, the main reason, and what gets harder).
+- [ ] Click **Commit changes**.
+
+<details><summary>A short example</summary>
+
+**ADR 0: Keep the weekly sales email in n8n**
+
+**Context.** An n8n workflow emails the sales team a weekly summary. It breaks about once a quarter when a column name changes. Only I maintain it.
+
+**Options considered.** 1. Keep it in n8n: quick to change, anyone can read it; no tests. 2. Rebuild in Python: tests catch a renamed column; slower to change, and only I can read it.
+
+**Decision and consequences.** Keep it in n8n, because a quarterly fix takes ten minutes. Harder: breakages still reach users first. Revisit if it starts feeding a payment or a customer.
+
+</details>
+
+The threat-model template ([Appendix B](/reference/a-c-templates/)) comes in later weeks.
 
 **Security lens:** where API keys must never appear (notebooks, screenshots, Git history, WhatsApp, GitHub Discussions); why a spend limit is a security control; why the course uses synthetic data only, never real supplier, customer or company data.
 
 **Self-check:** the last setup cell prints `Secrets OK · Claude reachable · Drive mounted · Dataset OK`, and your repository shows the saved setup notebook.
 
-**Minimum viable week:** tasks 2–6. Everything else can be finished before Week 2.
+**Minimum viable week:** Steps 2–7. Everything else can be finished before Week 2.
 
 **Keep for your portfolio:** the practice ADR.
+
+---
 
 ## Week 1 — Unpacking the black box
 

@@ -180,3 +180,12 @@ starlight-toc a { display: flex; gap: 0.5rem; font-size: var(--sl-text-sm); line
 starlight-toc a::before { content: '•'; flex-shrink: 0; color: var(--sl-color-gray-3); }
 starlight-toc a[style*="--depth: 1"]::before { content: '◦'; }
 starlight-toc a[aria-current='true']::before { color: var(--sl-color-text-accent); }
+
+/* Key phrases in readings: <span class="key">…</span>. #b4530a on light; lighter amber on the dark theme for contrast. */
+.key { color: #f0b855; font-weight: 600; }
+:root[data-theme='light'] .key { color: #b4530a; }
+
+/* Tickable task lists in assignments */
+.sl-markdown-content .contains-task-list { list-style: none; padding-inline-start: 0; }
+.sl-markdown-content .task-list-item { position: relative; padding-inline-start: 1.75rem; }
+.sl-markdown-content .task-list-item input[type=checkbox] { position: absolute; inset-inline-start: 0; top: 0.3em; margin: 0; width: 1.05rem; height: 1.05rem; accent-color: var(--sl-color-accent); cursor: pointer; }

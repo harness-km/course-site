@@ -45,7 +45,7 @@ Course 1 has a self-paced Week 0, 12 live sessions in two acts and a capstone, a
 
 | Session | Week | Focus | Gate |
 | --- | --- | --- | --- |
-| — | 0 | Setup and orientation (self-paced) | Setup self-check passes |
+| — | 0 | Set up your tools (self-paced) | Setup self-check passes |
 | 1 | 1 | Unpacking the black box |  |
 | 2 | 2 | Reading invoices: vision and structured output |  |
 | 3 | 3 | Tools and the agent loop by hand |  |
