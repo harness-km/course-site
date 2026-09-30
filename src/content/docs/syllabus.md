@@ -45,7 +45,7 @@ Course 1 has a self-paced Week 0, 12 live sessions in two acts and a capstone, a
 
 | Session | Week | Focus | Gate |
 | --- | --- | --- | --- |
-| — | 0 | Setup, orientation and prep pack (self-paced) | Setup self-check passes |
+| — | 0 | Setup and orientation (self-paced) | Setup self-check passes |
 | 1 | 1 | Unpacking the black box |  |
 | 2 | 2 | Reading invoices: vision and structured output |  |
 | 3 | 3 | Tools and the agent loop by hand |  |
@@ -108,10 +108,6 @@ The session discusses concepts rather than marking work. A typical shape:
 - **GitHub Discussions** on the starter repository for technical questions, using a template: what I ran, what I expected, the full error.
 - **WhatsApp** for announcements only.
 - **Catch-up.** In Weeks 1–6, every week page has an **Open solution in Colab** link once the week closes. From Week 7, `make catch-up WEEK=nn` first saves your work to a backup branch (`my-work-<date>`), then copies in only that week's folders from the published checkpoint and runs `make test`. Nothing you wrote is lost. You rehearse it once in Week 0.
-
-### Before Week 0: prep pack and readiness check
-
-A short self-assessment helps learners see whether they are ready. Anyone unsure works through the self-paced prep pack first: Python classes and exceptions, Git basics (clone, commit, branch, pull), using a terminal, and reading JSON.
 
 ### Recurring threads
 

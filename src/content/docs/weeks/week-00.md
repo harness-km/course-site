@@ -5,19 +5,18 @@ sidebar:
 week: 0
 weekLabel: '0'
 status: live
-summary: Every learner arrives at Week 1 with working keys, a spend limit, their own repository, the shared course dataset, a first look at Codespaces, and a Python baseline, so the first live session is spent on ideas, not setup.
+summary: Every learner arrives at Week 1 with working keys, a spend limit, their own repository, the shared course dataset and a first look at Codespaces, so the first live session is spent on ideas, not setup.
 outcomes:
 - A Colab notebook reads the API key from Colab Secrets and gets a reply from Claude
 - A monthly spend limit is set in the Anthropic Console
 - The learner's own copy of the starter repository exists, with a first notebook saved into it from Colab
 - A Codespace has been opened once and the terminal used for `git status` and `make test`
 - 'The course dataset is generated and explored: suppliers, SKUs, purchase orders, goods receipts and invoices'
-- A self-assessed Python baseline, with the prep pack done if needed
 security:
   text: Where API keys must never appear (notebooks, screenshots, Git history, WhatsApp, GitHub Discussions); why a spend limit is a security control; why the course uses synthetic data only, never real supplier, customer or company data.
   category: Unbounded consumption
 selfCheck: The last setup cell prints `Secrets OK · Claude reachable · Drive mounted · Dataset OK`, and your repository shows the saved setup notebook.
-mvw: Tasks 3–7. Everything else can be finished before Week 2.
+mvw: Tasks 2–6. Everything else can be finished before Week 2.
 portfolio:
 - The practice ADR
 lab:
@@ -132,17 +131,16 @@ The clerk did a two-way match (PO against invoice) and ignored the goods receipt
 
 ## Assignment
 
-1. Take the readiness self-check on the course site; if unsure, work through the prep pack first.
-2. Create or confirm a Google account and open Google Colab.
-3. Create a GitHub account. On the `harness-starter` repository, click **Use this template → Create a new repository** to make your own copy.
-4. In the Anthropic Console, create an API key and set a monthly spend limit (suggested: USD 40 for Course 1, with an email alert at USD 20).
-5. In Colab, open **Secrets** (key icon, left sidebar) → **Add new secret** → name `ANTHROPIC_API_KEY` → paste the key → turn on **Notebook access**.
-6. Run `week-00/setup.ipynb`. It mounts Google Drive, generates the course dataset, checks the secret, calls Claude and prints versions.
-7. Save the notebook into your repository: **File → Save a copy in GitHub**, choose your repository and the `week-00/` folder. When GitHub asks for authorisation, tick the option to include private repositories. Save again after every edit: Colab does not sync on its own. This is how every Colab assignment is kept.
-8. The setup notebook creates `distributor.db` for the course's fictional FMCG distributor (in Codespaces: `make data`): about 500 SKUs, 8 suppliers, purchase orders, goods receipt notes (GRNs) and 40 sample supplier invoices as PDFs. The generator uses a fixed seed, so everyone gets identical data, and it saves the database to your Google Drive so it survives a Colab reset; every lab's first cell re-creates it if it is missing.
-9. Work through the dataset tour: pick one purchase order and follow it to what arrived (GRN) and what was billed (invoice).
-10. Open your repository in a Codespace once (**Code → Codespaces → Create codespace**), run `git status` and `make test` in the terminal, then make catch-up WEEK=00 as a rehearsal (it saves a backup branch and changes nothing else). Commit anything you changed, then delete the Codespace; Week 7 starts with a fresh one.
-11. Join the WhatsApp group (link in your welcome email), meet your pod, and post one goal in the Introductions category of GitHub Discussions.
+1. Create or confirm a Google account and open Google Colab.
+2. Create a GitHub account. On the `harness-starter` repository, click **Use this template → Create a new repository** to make your own copy.
+3. In the Anthropic Console, create an API key and set a monthly spend limit (suggested: USD 40 for Course 1, with an email alert at USD 20).
+4. In Colab, open **Secrets** (key icon, left sidebar) → **Add new secret** → name `ANTHROPIC_API_KEY` → paste the key → turn on **Notebook access**.
+5. Run `week-00/setup.ipynb`. It mounts Google Drive, generates the course dataset, checks the secret, calls Claude and prints versions.
+6. Save the notebook into your repository: **File → Save a copy in GitHub**, choose your repository and the `week-00/` folder. When GitHub asks for authorisation, tick the option to include private repositories. Save again after every edit: Colab does not sync on its own. This is how every Colab assignment is kept.
+7. The setup notebook creates `distributor.db` for the course's fictional FMCG distributor (in Codespaces: `make data`): about 500 SKUs, 8 suppliers, purchase orders, goods receipt notes (GRNs) and 40 sample supplier invoices as PDFs. The generator uses a fixed seed, so everyone gets identical data, and it saves the database to your Google Drive so it survives a Colab reset; every lab's first cell re-creates it if it is missing.
+8. Work through the dataset tour: pick one purchase order and follow it to what arrived (GRN) and what was billed (invoice).
+9. Open your repository in a Codespace once (**Code → Codespaces → Create codespace**), run `git status` and `make test` in the terminal, then make catch-up WEEK=00 as a rehearsal (it saves a backup branch and changes nothing else). Commit anything you changed, then delete the Codespace; Week 7 starts with a fresh one.
+10. Join the WhatsApp group (link in your welcome email), meet your pod, and post one goal in the Introductions category of GitHub Discussions.
 
 **Business primer: procure-to-pay in one page.** Purchase order (what we agreed to buy, at what price) → goods receipt (what actually arrived) → supplier invoice (what we are asked to pay) → three-way match (do all three agree?) → payment. Harness 1 automates the invoice-to-payment decision.
 
