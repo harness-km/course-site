@@ -110,6 +110,11 @@ const label = isWeek ? (d.weekLabel ?? weekLabel(d.week)) : '';
 <script>
   // Markdown task lists ("- [ ]") on week pages become tickable; ticks are kept in this browser only.
   const boxes = document.querySelectorAll<HTMLInputElement>('.sl-markdown-content li.task-list-item input[type=checkbox]');
+  // Fit the right sidebar to its text (see --km-toc-width in brand.css).
+  const tocPanel = document.querySelector<HTMLElement>('.right-sidebar-panel');
+  if (tocPanel && matchMedia('(min-width: 72rem)').matches) {
+    document.documentElement.style.setProperty('--km-toc-width', `${Math.ceil(tocPanel.getBoundingClientRect().width) + 1}px`);
+  }
   if (boxes.length) {
     const key = `km-tasks-${location.pathname}`;
     let state: Record<string, boolean> = {};

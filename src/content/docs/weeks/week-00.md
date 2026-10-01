@@ -133,6 +133,8 @@ Work through the nine steps in order and tick each box as you go. Your ticks are
 
 **You should see:** the Colab home page, with **New notebook** and **Upload notebook** buttons. You need neither: the course gives you its notebook in Step 4. Checking that this page opens is enough.
 
+![The Colab home page, with New notebook and Upload notebook buttons](/images/week-00/step-01.png)
+
 ### Step 2: GitHub account
 
 - [ ] Create an account at [github.com](https://github.com).
@@ -143,20 +145,28 @@ Work through the nine steps in order and tick each box as you go. Your ticks are
 
 **You should see:** your own repository, with a padlock beside its name.
 
+![A new private repository called harness-course, with a padlock and the Private label](/images/week-00/step-02.png)
+
 ### Step 3: Claude account and spend limit
 
 - [ ] Sign up at [platform.claude.com](https://platform.claude.com).
 - [ ] Add a payment method and buy the smallest credit top-up. Card issued outside the US? Check it allows international online payments.
-- [ ] Set a spend limit under **Limits**: USD 40 a month, with an email alert at USD 20.
+- [ ] Go to **Settings** → **Limits** and find **Spend limits**.
+- [ ] Next to **Monthly spend limit**, click **Adjust limit** and set it to USD 40.
+- [ ] Next to **Email notifications**, click **Edit** and set the alert at USD 20.
 
-**You should see:** the limit and the alert under Limits. You create the key itself in Step 5.
+**You should see:** your monthly spend limit and your email alert amount on the Spend limits page. You create the key itself in Step 5.
+
+![The Claude Console Limits page showing a USD 40 monthly limit and a USD 20 email alert](/images/week-00/step-03.png)
 
 ### Step 4: Open the setup notebook
 
 - [ ] Scroll to the top of this page and click **Open lab in Colab**. The setup notebook opens in Colab.
-- [ ] If Colab keeps loading, see "If something goes wrong" at the end of this assignment.
+- [ ] If Colab keeps loading, see [If something goes wrong](#if-something-goes-wrong) at the end of this assignment.
 
 **You should see:** a notebook called `setup.ipynb`. This is the course's copy. In Step 7 you save it into your own repository.
+
+![The setup notebook open in Colab](/images/week-00/step-04.png)
 
 ### Step 5: Create your key and add it to Colab
 
@@ -168,6 +178,8 @@ Work through the nine steps in order and tick each box as you go. Your ticks are
 
 **You should see:** the secret in the list, with Notebook access on.
 
+![Colab Secrets panel with ANTHROPIC_API_KEY listed, value hidden, Notebook access switched on](/images/week-00/step-05.png)
+
 ### Step 6: Run the setup notebook
 
 - [ ] Click **Runtime** → **Run all**.
@@ -176,14 +188,22 @@ Work through the nine steps in order and tick each box as you go. Your ticks are
 
 **You should see:** the last line print `Secrets OK · Claude reachable · Drive mounted · Dataset OK`.
 
+![The self-check output: four PASS lines and Secrets OK, Claude reachable, Drive mounted, Dataset OK](/images/week-00/step-06.png)
+
 ### Step 7: Save your work to GitHub
 
-- [ ] Click **File** → **Save** (or press Ctrl+S). Because the notebook came from GitHub, this opens a **Save in GitHub** window. Do not use "Save a copy in Drive" or "Save a copy as a GitHub Gist": neither reaches your repository.
-- [ ] First time only: Colab cannot see private repositories yet, so `harness-course` is not in the list. Click **Cancel**, then **File** → **Open notebook** → **GitHub** tab → tick **Include private repos** → click **Authorize** in the GitHub window. Close the Open notebook window and press **Ctrl+S** again.
+- [ ] Click **File** → **Save** in Colab's own menu. Because the notebook came from GitHub, this opens a **Save in GitHub** window. Do not use "Save a copy in Drive" or "Save a copy as a GitHub Gist": neither reaches your repository.
+- [ ] First time only: Colab cannot see private repositories yet, so `harness-course` is not in the list. Click **Cancel**, then **File** → **Open notebook** → **GitHub** tab → tick **Include private repos** → click **Authorize** in the GitHub window. Close the Open notebook window and click **File** → **Save** again.
 - [ ] Set **Repository** to your own `harness-course`, **Branch** to `main`, **File path** to `week-00/setup.ipynb`. Click **OK**.
 - [ ] Remember: Colab does not save to GitHub on its own. Save again after every edit.
 
 **You should see:** a new commit on your repository page, a few seconds old.
+
+![The Open notebook window, GitHub tab, with Include private repos ticked](/images/week-00/step-07a.png)
+
+![The Save in GitHub window with Repository set to harness-course, branch main, path week-00/setup.ipynb](/images/week-00/step-07b.png)
+
+![Your harness-course repository showing week-00/setup.ipynb with the commit message Created using Colab](/images/week-00/step-07c.png)
 
 ### Step 8: Try Codespaces once
 
@@ -195,17 +215,24 @@ Work through the nine steps in order and tick each box as you go. Your ticks are
 
 **You should see:** `make test` passing, and no Codespace left in your list.
 
+![A Codespace terminal showing git status and make test passing](/images/week-00/step-08.png)
+
 ### Step 9: Meet your group
 
 - [ ] Join the WhatsApp group (link in your welcome email).
 - [ ] Say hello to your pod.
-- [ ] Post one goal in GitHub Discussions, in the **Introductions** category.
+- [ ] Open the course Discussions at [github.com/harness-km/harness-starter/discussions](https://github.com/harness-km/harness-starter/discussions).
+- [ ] Click **New discussion** → **Introductions**. Say who you are and post one goal for the course. Share only what you are happy to make public.
 
 **You should see:** your post in Discussions.
+
+![A post in the Introductions category of GitHub Discussions](/images/week-00/step-09.png)
 
 ### If you have time: tour the dataset
 
 - [ ] The setup notebook created a small database for a fictional distributor: suppliers, products, purchase orders, deliveries and invoices. Pick one purchase order and follow it to what arrived and what was billed.
+
+<a id="if-something-goes-wrong"></a>
 
 :::caution[If something goes wrong]
 - **Colab keeps loading and never opens:** open the link in a private window (Ctrl+Shift+N) and sign in to one Google account only. If that works, sign out of your other Google accounts, or allow cookies for google.com, or pause your ad-blocker for Colab.

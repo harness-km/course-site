@@ -192,3 +192,13 @@ starlight-toc a[aria-current='true']::before { color: var(--sl-color-text-accent
 
 /* Body text 0.5pt smaller than Starlight's default (12pt → 11.5pt). Headings unchanged. */
 :root { --sl-text-body: 0.9583rem; }
+
+/* Right sidebar ("On this page") sized to its text. Default below; the script in
+   MarkdownContent.astro measures the panel and sets --km-toc-width on load. */
+:root { --km-toc-width: 16rem; }
+@media (min-width: 72rem) {
+  .right-sidebar-container { width: var(--km-toc-width); }
+  [data-has-sidebar][data-has-toc] .main-pane { width: calc(100% - var(--km-toc-width)); --sl-content-width: 60rem; --sl-content-margin-inline: auto; }
+  .right-sidebar-panel { width: max-content; min-width: 12rem; max-width: 20rem; }
+  .right-sidebar-panel .sl-container { width: auto; max-width: none; }
+}

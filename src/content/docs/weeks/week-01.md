@@ -77,7 +77,7 @@ In n8n these are the node's fields and "Options". In code, you can see all of th
 
 ### The response and its content blocks
 
-<!-- figure: week-01/step-03-response (how a response is created; image prompt in session notes) -->
+![How a Claude response is created: your code names three things, the library sends one HTTPS POST, Anthropic's server runs the model and fills in a fixed reply form; fields it knows are filled, unused features come back as None](/images/week-01/week-01-step-03-response.webp)
 
 Printing `response.model_dump_json(indent=2)` shows the whole object. It looks like this (the numbers and text are illustrative):
 
