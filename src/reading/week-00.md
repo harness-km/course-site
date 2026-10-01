@@ -35,7 +35,7 @@ Set a monthly spend limit of <span class="key">USD 40</span> with an email alert
 
 The setup notebook installs pinned versions of everything, so nothing changes mid-course. You meet each library when you need it:
 
-- **Python 3.12**: every week
+- **Python 3.13**: every week
 - **LangChain**, through `init_chat_model`: Week 1
 - **Pydantic v2**: Week 2
 - **SQLite**: Week 3
@@ -61,7 +61,7 @@ GitHub keeps your work safe and shows every version of it. Six words cover most 
 
 ![The Git daily workflow: check the status, stage your files, commit, pull, push](/images/git/git-daily-workflow.webp)
 
-- **Weeks 1–6:** Colab runs the loop for you. **Save a copy in GitHub** is a commit and a push in one click.
+- **Weeks 1–6:** Colab runs the loop for you. Saving to GitHub (**File → Save**) is a commit and a push in one click.
 - **From Week 7:** in Codespaces you type the commands yourself. You rehearse them once in [Step 8](#step-8-try-codespaces-once).
 
 The picture mentions teammates. In this course the other side of the loop is you, in another tool: Colab, Codespaces and GitHub stay in step.

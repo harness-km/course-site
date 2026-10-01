@@ -189,3 +189,6 @@ starlight-toc a[aria-current='true']::before { color: var(--sl-color-text-accent
 .sl-markdown-content .contains-task-list { list-style: none; padding-inline-start: 0; }
 .sl-markdown-content .task-list-item { position: relative; padding-inline-start: 1.75rem; }
 .sl-markdown-content .task-list-item input[type=checkbox] { position: absolute; inset-inline-start: 0; top: 0.3em; margin: 0; width: 1.05rem; height: 1.05rem; accent-color: var(--sl-color-accent); cursor: pointer; }
+
+/* Body text 0.5pt smaller than Starlight's default (12pt → 11.5pt). Headings unchanged. */
+:root { --sl-text-body: 0.9583rem; }

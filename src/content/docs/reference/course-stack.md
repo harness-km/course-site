@@ -12,7 +12,7 @@ Everything runs in a browser with almost no setup, so every learner has the same
 | Layer | Course choice | Why |
 | --- | --- | --- |
 | Where learners build | Google Colab (Weeks 1–6); GitHub Codespaces with a pre-built container (Week 7 on) | Browser only, identical for everyone |
-| Language | Python 3.12, pinned library versions | One lock file; nothing breaks mid-course |
+| Language | Python 3.13, pinned library versions | One lock file; nothing breaks mid-course |
 | Models | Anthropic API: Haiku, Sonnet, Opus, through `init_chat_model` | One key; three tiers still teach model routing |
 | Orchestration | LangGraph | Explicit state and edges teach control flow |
 | Contracts | Pydantic v2 | Typed inputs and outputs everywhere |

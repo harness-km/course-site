@@ -63,7 +63,7 @@ Set a monthly spend limit of <span class="key">USD 40</span> with an email alert
 
 The setup notebook installs pinned versions of everything, so nothing changes mid-course. You meet each library when you need it:
 
-- **Python 3.12**: every week
+- **Python 3.13**: every week
 - **LangChain**, through `init_chat_model`: Week 1
 - **Pydantic v2**: Week 2
 - **SQLite**: Week 3
@@ -89,7 +89,7 @@ GitHub keeps your work safe and shows every version of it. Six words cover most 
 
 ![The Git daily workflow: check the status, stage your files, commit, pull, push](/images/git/git-daily-workflow.webp)
 
-- **Weeks 1–6:** Colab runs the loop for you. **Save a copy in GitHub** is a commit and a push in one click.
+- **Weeks 1–6:** Colab runs the loop for you. Saving to GitHub (**File → Save**) is a commit and a push in one click.
 - **From Week 7:** in Codespaces you type the commands yourself. You rehearse them once in [Step 8](#step-8-try-codespaces-once).
 
 The picture mentions teammates. In this course the other side of the loop is you, in another tool: Colab, Codespaces and GitHub stay in step.
@@ -129,9 +129,9 @@ Work through the nine steps in order and tick each box as you go. Your ticks are
 ### Step 1: Google account and Colab
 
 - [ ] Sign in to Google, or create an account at [accounts.google.com](https://accounts.google.com).
-- [ ] Open [colab.research.google.com](https://colab.research.google.com). If a window pops up, close it. You do not need a new notebook: the course gives you one in Step 4.
+- [ ] Open [colab.research.google.com](https://colab.research.google.com).
 
-**You should see:** the Colab page, with your Google picture at the top right.
+**You should see:** the Colab home page, with **New notebook** and **Upload notebook** buttons. You need neither: the course gives you its notebook in Step 4. Checking that this page opens is enough.
 
 ### Step 2: GitHub account
 
@@ -178,9 +178,9 @@ Work through the nine steps in order and tick each box as you go. Your ticks are
 
 ### Step 7: Save your work to GitHub
 
-- [ ] Click **File** → **Save a copy in GitHub**.
-- [ ] The first time, GitHub asks for permission. Tick **Include private repos** and allow access.
-- [ ] Choose `harness-course`, branch `main`, path `week-00/setup.ipynb`. Click **OK**.
+- [ ] Click **File** → **Save** (or press Ctrl+S). Because the notebook came from GitHub, this opens a **Save in GitHub** window. Do not use "Save a copy in Drive" or "Save a copy as a GitHub Gist": neither reaches your repository.
+- [ ] First time only: Colab cannot see private repositories yet, so `harness-course` is not in the list. Click **Cancel**, then **File** → **Open notebook** → **GitHub** tab → tick **Include private repos** → click **Authorize** in the GitHub window. Close the Open notebook window and press **Ctrl+S** again.
+- [ ] Set **Repository** to your own `harness-course`, **Branch** to `main`, **File path** to `week-00/setup.ipynb`. Click **OK**.
 - [ ] Remember: Colab does not save to GitHub on its own. Save again after every edit.
 
 **You should see:** a new commit on your repository page, a few seconds old.
