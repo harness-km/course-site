@@ -77,6 +77,8 @@ In n8n these are the node's fields and "Options". In code, you can see all of th
 
 ### The response and its content blocks
 
+![How a Claude response is created: your code names three things, the library sends one HTTPS POST, Anthropic's server runs the model and fills in a fixed reply form; fields it knows are filled, unused features come back as None](/images/week-01/week-01-step-03-response.webp)
+
 Printing `response.model_dump_json(indent=2)` shows the whole object. It looks like this (the numbers and text are illustrative):
 
 ```json
@@ -105,6 +107,14 @@ Printing `response.model_dump_json(indent=2)` shows the whole object. It looks l
 The reply is not a string. It is `content`, a **list of blocks**, and each block has a `type`. Here there is one text block, so the text is at `response.content[0].text`. Next week a request will carry image blocks; in Week 3 a response will carry `tool_use` blocks, where the model asks your code to run a tool. This is the reason `output[0].content[0].text` appears in n8n expressions: the node is showing you the list structure you are now reading directly.
 
 The SDK gives you attributes rather than dictionary keys: `response.content[0].text`, `response.stop_reason`, `response.usage.input_tokens`.
+
+**You sent three things; you got back a dozen.** Your call named only `model`, `max_tokens` and `messages`. Every other field comes from Anthropic, not from your code:
+
+- The reply is a **fixed form**, the same for every call. The SDK's `Message` class lists every box on it, so printing it shows them all.
+- The **server fills in** what it knows about this reply: `id`, `role`, `model`, `content`, `stop_reason`, `usage`. `model` names the exact snapshot that answered, for example `claude-haiku-4-5-20251001`.
+- Boxes for **features you did not use** come back empty (`null` in JSON, `None` in Python): `stop_sequence`, `container`, `citations` and others.
+
+In n8n, the HTTP Request node's output panel works the same way: a few inputs, the API's whole response out. Two fields you will use constantly: `role`, because you append the reply to `messages` so the next call sees it, and `stop_reason`, next.
 
 ### Stop reasons, and the reply that "succeeds" while broken
 

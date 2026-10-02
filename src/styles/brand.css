@@ -180,3 +180,25 @@ starlight-toc a { display: flex; gap: 0.5rem; font-size: var(--sl-text-sm); line
 starlight-toc a::before { content: '•'; flex-shrink: 0; color: var(--sl-color-gray-3); }
 starlight-toc a[style*="--depth: 1"]::before { content: '◦'; }
 starlight-toc a[aria-current='true']::before { color: var(--sl-color-text-accent); }
+
+/* Key phrases in readings: <span class="key">…</span>. #b4530a on light; lighter amber on the dark theme for contrast. */
+.key { color: #f0b855; font-weight: 600; }
+:root[data-theme='light'] .key { color: #b4530a; }
+
+/* Tickable task lists in assignments */
+.sl-markdown-content .contains-task-list { list-style: none; padding-inline-start: 0; }
+.sl-markdown-content .task-list-item { position: relative; padding-inline-start: 1.75rem; }
+.sl-markdown-content .task-list-item input[type=checkbox] { position: absolute; inset-inline-start: 0; top: 0.3em; margin: 0; width: 1.05rem; height: 1.05rem; accent-color: var(--sl-color-accent); cursor: pointer; }
+
+/* Body text 0.5pt smaller than Starlight's default (12pt → 11.5pt). Headings unchanged. */
+:root { --sl-text-body: 0.9583rem; }
+
+/* Right sidebar ("On this page") sized to its text. Default below; the script in
+   MarkdownContent.astro measures the panel and sets --km-toc-width on load. */
+:root { --km-toc-width: 16rem; }
+@media (min-width: 72rem) {
+  .right-sidebar-container { width: var(--km-toc-width); }
+  [data-has-sidebar][data-has-toc] .main-pane { width: calc(100% - var(--km-toc-width)); --sl-content-width: 60rem; --sl-content-margin-inline: auto; }
+  .right-sidebar-panel { width: max-content; min-width: 12rem; max-width: 20rem; }
+  .right-sidebar-panel .sl-container { width: auto; max-width: none; }
+}
